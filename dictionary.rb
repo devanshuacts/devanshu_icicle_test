@@ -42,9 +42,9 @@ class Dictionary
     def get_combination_words(num_str, word_lengths)
         this_comb = []
         start_pos_str = len_str = 0
-        word_lengths.each_index do |index|
+        word_lengths.each do |word_length|
             character_arrays = []
-            len_str = word_lengths[index]
+            len_str = word_length
             character_arrays = num_char_map(num_str, start_pos_str, len_str, character_arrays)
             start_pos_str = start_pos_str + len_str
             word_arr = chararr_to_words(character_arrays)
