@@ -1,4 +1,5 @@
 require 'rspec'
+require 'spec_helper.rb'
 require_relative '../dictionary.rb'
 
 describe Dictionary do
@@ -45,6 +46,34 @@ describe Dictionary do
             it "should return a list containing words in list2 for number 2282668687" do
                 mylist = @dictionary.return_all_words(2282668687)
                 expect(mylist).to eq(@list2)
+            end
+        end
+
+        context "when phone number is Integer but less than ten digits" do
+            it "should return an empty array" do
+                empty_arr = @dictionary.return_all_words(959763842)
+                expect(empty_arr).to eq([])
+            end
+        end
+
+        context "when phone number is string" do
+            it "should return an empty array" do
+                empty_arr = @dictionary.return_all_words("9597638842")
+                expect(empty_arr).to eq([])
+            end
+        end
+
+        context "when any type of input is provided" do
+            input_types = {"string" => "9597638842", "invalid integer" => 959763842, "valid integer" => 9597638842}
+            input_types.each do |type, val|
+                it "should return an array for input type #{type} of value #{val}" do
+                    empty_arr1 = @dictionary.return_all_words("9597638842") #a string
+                    empty_arr2 = @dictionary.return_all_words(959763842) # less than 10 digits
+                    mylist = @dictionary.return_all_words(9597638842) #valid 10 digit number
+                    expect(empty_arr1.is_a? Array).to eq(true)
+                    expect(empty_arr2.is_a? Array).to eq(true)
+                    expect(mylist.is_a? Array).to eq(true)
+                end
             end
         end
     end
