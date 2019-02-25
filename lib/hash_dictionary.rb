@@ -32,4 +32,16 @@ module HashDictionary
         @dict_hash[key] = [] unless @dict_hash[key]
         @dict_hash[key].push(str)
     end
+
+    # from the word array passed return only those words which are present in dictionary hash
+    def return_dict_words(word_arr)
+        words = []
+        word_arr.each do |word|
+            key = word.slice(0,3).upcase
+            if @dict_hash[key] && @dict_hash[key].include?(word.upcase)
+                words.push(word)
+            end
+        end
+        words
+    end
 end

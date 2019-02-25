@@ -1,5 +1,5 @@
 require 'rspec'
-require '../dictionary.rb'
+require_relative '../dictionary.rb'
 
 describe Dictionary do
     before(:all) do
