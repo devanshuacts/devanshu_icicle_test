@@ -1,11 +1,10 @@
 require 'rspec'
 require 'spec_helper.rb'
-require_relative '../dictionary.rb'
+require_relative '../lib/dictionary.rb'
 
 describe Dictionary do
     before(:all) do
         @dictionary = Dictionary.new
-        @dictionary.load_file_to_hash
         @list1 = [[
             "mot", "opt", "puck"], ["mot", "opt", "ruck"], ["mot", "opt", "suck"], ["mot", "ort", "puck"], 
             ["mot", "ort", "ruck"], ["mot", "ort", "suck"], ["not", "opt", "puck"], ["not", "opt", "ruck"], 
@@ -40,12 +39,12 @@ describe Dictionary do
         context "when phone number is Integer and of 10 digits" do
             it "should return a list containing words in list1 for number 6686787825" do
                 mylist = @dictionary.return_all_words(6686787825)
-                expect(mylist).to eq(@list1)
+                expect(mylist.sort).to eq(@list1.sort)
             end
 
             it "should return a list containing words in list2 for number 2282668687" do
                 mylist = @dictionary.return_all_words(2282668687)
-                expect(mylist).to eq(@list2)
+                expect(mylist.sort).to eq(@list2.sort)
             end
         end
 
