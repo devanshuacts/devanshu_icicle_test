@@ -11,23 +11,26 @@
 
 1. A hash map has been implemented to load the dictionary.txt file into a hash
 
-2. The implementation is as follows: 
-   * Firstly, a dictionary object is created and calls to load dictionary.txt file into a hash using add_to_hash method     of module HashDictionary.
-   * Then the method get_combination_words is called upon the object and a number is passed as argument to it. This         method calls other private class methods and module methods to find all possible words in the dictionary for that      number.
-   * Now the combinations possible for word lengths are [3,3,4], [3,4,3], [3,7], [4,3,3], [4,6], [5,5], [6,4], [7,3] and    [10] for a 10 digit number with minimum word length of 3.
+2. There are two files: dictionary_management.rb and dictionary.rb. The first deals with dictionary management of creating a hash object and inserting each word of the file provided to it into that hash. It also checks whether a word is present in the dictionary or not.
+The second file dictionary.rb has the core logic of returning all the words possible for a given 10 digit number.
+
+3. The implementation is as follows: 
+   * Firstly, a dictionary object is created and calls to load dictionary.txt file into a hash using load_file_to_hash method     of module DictionaryManagement.
+   * Then the method return_all_words is called upon the object and a 10 digit number is passed as argument to it. This method calls other private class methods and module methods to find all possible words in the dictionary for that number.
+   * To find the combinations of word lengths possible for a given minimum word length and max length of the number is calculated in method find_combinations. For minimum word length 3 and max digit length as 10 the combinations possible are [3,3,4], [3,4,3], [3,7], [4,3,3], [4,6], [5,5], [6,4], [7,3] and [10].
    * A loop runs for each combination iterating over each word length array, say [4,6].
    * The idea is to return all possible words possible from first 4 letters as one word and then next 6 letters as          another word using above example of [4,6] pair of word lengths.
    * For each such pair or triplet, the logic to find possible words is implemented in function get_combination_words of    Dictionary class.
-   * It does so by making use of method return_dict_words in HashDictionary module.
+   * It uses the method exists_in_dict in DictionaryManagement module to check whether a word exists in dictionary or not.
    * For each word length a cartesian product of individual word lenghths e.g. 4 and 6 is computed to find all possible     permutaions and combinations.
    * Similarly all such word length combinations are iterated and the words are collected and pushed into one array.
    * That array is retuned to the caller of method get_combination_words. If no words are possible then an empty array is   returned
  
-3. For testing I have used rspec gem. The spec file contains test cases to check for numbers 6686787825 and 2282668687
+4. For testing I have used rspec gem. The spec file contains test cases to check for numbers 6686787825 and 2282668687
 
 ### Run code:
 ```
-ruby dictionary.rb
+ruby lib/dictionary.rb
 ```
 The file contains a sample object of class Dictionary and calls get_combination_words by passing number 2282668687. The sample object implementation is commented. If comments are removed it would return an array of array of possible words:
 
@@ -51,11 +54,11 @@ The file contains a sample object of class Dictionary and calls get_combination_
 
 ### Run test cases:
 ```
-rspec dictionary_spec.rb
+rspec spec/dictionary_spec.rb
 ```
 To run single test case:
 ```
-rspec dictionary_spec.rb -e "<test case string inside it block>"
+rspec spec/dictionary_spec.rb -e "<test case string inside it block>"
 ```
 
 1. The spec helper contains configuration to run the tests in documentation format.
@@ -73,13 +76,12 @@ As the script contains a defualt run of sample Dictionary object for finding pos
 
 ```
 # dict = Dictionary.new
-# dict.load_file_to_hash
 # list = dict.return_all_words(2282668687) #To execute for any other number replace the default number by custom number
 ```
 Removing the comments and then running the commad:
 
 ```
-time ruby dictionary.rb
+time ruby lib/dictionary.rb
 ```
 
 In my 2.2 GHz Intel Core i7 processor on macOS 10.13.6 following is the benchmark report:
